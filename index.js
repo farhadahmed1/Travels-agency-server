@@ -23,9 +23,14 @@ async function run() {
         await client.connect();
         // console.log('database connn');
         const database = client.db("heroRider");
+        const usersCollection = database.collection('usersData');
 
         // get API
-
+        app.post('/users', async (req, res) => {
+            const user = req.body;
+            const result = await usersCollection.insertOne(user);
+            res.send(result);
+        })
     }
     finally {
         // await client.close();
